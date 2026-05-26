@@ -13,5 +13,14 @@
   "dependencies": {
     "ejs": "^5.0.2",
     "express": "^5.2.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/25051104-EthanLye/Alarm-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/25051104-EthanLye/Alarm-web/issues"
+  },
+  "homepage": "https://github.com/25051104-EthanLye/Alarm-web#readme"
 }
