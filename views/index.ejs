@@ -2,10 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alarm-Web | Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        .clock-container { text-align: center; margin: 3rem 0; }
+        #live-clock { font-size: 4rem; font-weight: bold; font-family: monospace; }
+    </style>
 </head>
 <body>
-    
+    <main class="container">
+        <%- include('partials/navbar') %>
+
+        <section class="clock-container">
+            <h2>Current Time</h2>
+            <div id="live-clock">00:00:00</div>
+        </section>
+
+        <section>
+            <h3>Latest Alarms</h3>
+            <% if (latestAlarms.length === 0) { %>
+                <p>No alarms set yet. <a href="/manage">Create one here.</a></p>
+            <% } else { %>
+                <div class="grid">
+                    <% latestAlarms.forEach(alarm => { %>
+                        <article>
+                            <header>
+                                <strong><%= alarm.time %></strong> - <%= alarm.date %>
+                            </header>
+                            <h5><%= alarm.title %></h5>
+                            <p><small><%= alarm.description %></small></p>
+                            <footer>
+                                <form action="/toggle-alarm/<%= alarm.id %>" method="POST" style="margin: 0;">
+                                    <button type="submit" class="<%= alarm.isActive ? '' : 'secondary' %>">
+                                        <%= alarm.isActive ? 'Turn Off' : 'Turn On' %>
+                                    </button>
+                                </form>
+                            </footer>
+                        </article>
+                    <% }) %>
+                </div>
+            <% } %>
+        </section>
+    </main>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('live-clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Run immediately on load
+    </script>
 </body>
 </html>
